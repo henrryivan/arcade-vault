@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Leaderboard } from "@/components/leaderboard";
@@ -5,6 +6,18 @@ import { GAMES, seededScores } from "@/lib/data";
 
 export function generateStaticParams() {
   return GAMES.map((g) => ({ id: g.id }));
+}
+
+// Los 8 ids se prerenderizan; el resto (404) bloquea para devolver el código de estado 404 real.
+export const instant = false;
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/juegos/[id]">): Promise<Metadata> {
+  const { id } = await params;
+  const game = GAMES.find((g) => g.id === id);
+  if (!game) return {};
+  return { title: game.title, description: game.short };
 }
 
 export default async function GameDetailPage({

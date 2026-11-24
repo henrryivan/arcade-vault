@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Arcade Vault",
+  title: { default: "Arcade Vault", template: "%s · Arcade Vault" },
   description: "Juega online y compite por el puntaje más alto",
 };
 
