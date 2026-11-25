@@ -1,6 +1,6 @@
 # SPEC 03 — Página About con formulario de contacto por correo (Resend)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01, SPEC 02
 > **Date:** 2026-11-25
 > **Objective:** Implementar la página About de `references/templates/home-about` en `/about` y hacer que su formulario de contacto envíe un correo real al equipo mediante Resend y una Server Action.
@@ -90,26 +90,26 @@ Antes de empezar, leer en `node_modules/next/dist/docs/01-app` la guía de Serve
 
 ## Criterios de aceptación
 
-- [ ] `npm run build` termina sin errores.
-- [ ] `npm run lint` termina sin errores ni warnings nuevos.
-- [ ] `/about` muestra el kicker "▸ ACERCA DE", el título "ACERCA DE ARCADE VAULT" y el texto de misión de la plantilla.
-- [ ] `/about` muestra exactamente 3 destacados con icono: "HECHO CON ❤️ PARA JUGADORES", "JUEGOS EN HTML — CORREN EN CUALQUIER NAVEGADOR" y "PROYECTO EN CONSTANTE CRECIMIENTO".
-- [ ] `/about` muestra el divisor de píxeles y la sección "▸ CONTACTO" con el título "CONTÁCTANOS" y los tres tips (RESPUESTA EN 24-48H, SUGERENCIAS BIENVENIDAS, SIN SPAM, JAMÁS).
-- [ ] El formulario tiene los campos NOMBRE, CORREO ELECTRÓNICO y MENSAJE y el botón "▶ ENVIAR MENSAJE".
-- [ ] Enviar con algún campo vacío activa el efecto `shake` y no llama a la Server Action.
-- [ ] Enviar con datos válidos y una clave de Resend válida entrega un correo en `CONTACT_TO_EMAIL` con asunto `[Arcade Vault] Mensaje de <nombre>`, el mensaje en el cuerpo y `reply-to` igual al correo del visitante.
-- [ ] Tras un envío exitoso aparece la terminal "VAULT-OS // TERMINAL" con "MENSAJE RECIBIDO. TE RESPONDEREMOS PRONTO. GRACIAS, <NOMBRE EN MAYÚSCULAS>.".
-- [ ] ENVIAR OTRO MENSAJE vuelve al formulario con los tres campos vacíos.
-- [ ] Mientras la acción está en curso, el botón está deshabilitado y muestra "ENVIANDO…"; no se puede enviar dos veces.
-- [ ] Con una `RESEND_API_KEY` inválida o ausente, el formulario muestra el aviso `[ERROR]`, conserva los datos escritos y **no** muestra la terminal de éxito.
-- [ ] Llamar a la acción con un correo mal formado, un mensaje de más de 2000 caracteres o un campo vacío devuelve `{ ok: false, error: "invalid" }` y no llama a Resend.
-- [ ] Con el campo honeypot `website` relleno no se envía ningún correo y la respuesta es `{ ok: true }`.
-- [ ] `RESEND_API_KEY` no aparece en el HTML, en los bundles de cliente ni en la pestaña Network del navegador.
-- [ ] `.env.example` está versionado y `.env.local` no aparece en `git status`.
-- [ ] El Nav tiene los enlaces Inicio, Biblioteca, Salón de la Fama y Acerca de, en escritorio y en el panel móvil, y "Acerca de" se marca activo en `/about`.
-- [ ] Las secciones con `.reveal` aparecen al hacer scroll en `/about`.
-- [ ] En 390 px `/about` no tiene scroll horizontal y el formulario es usable.
-- [ ] La consola del navegador no muestra errores ni warnings de hidratación en `/about`, `/` y `/juegos`.
+- [x] `npm run build` termina sin errores.
+- [x] `npm run lint` termina sin errores ni warnings nuevos.
+- [X] `/about` muestra el kicker "▸ ACERCA DE", el título "ACERCA DE ARCADE VAULT" y el texto de misión de la plantilla.
+- [X] `/about` muestra exactamente 3 destacados con icono: "HECHO CON ❤️ PARA JUGADORES", "JUEGOS EN HTML — CORREN EN CUALQUIER NAVEGADOR" y "PROYECTO EN CONSTANTE CRECIMIENTO".
+- [X] `/about` muestra el divisor de píxeles y la sección "▸ CONTACTO" con el título "CONTÁCTANOS" y los tres tips (RESPUESTA EN 24-48H, SUGERENCIAS BIENVENIDAS, SIN SPAM, JAMÁS).
+- [X] El formulario tiene los campos NOMBRE, CORREO ELECTRÓNICO y MENSAJE y el botón "▶ ENVIAR MENSAJE".
+- [X] Enviar con algún campo vacío activa el efecto `shake` y no llama a la Server Action.
+- [X] Enviar con datos válidos y una clave de Resend válida entrega un correo en `CONTACT_TO_EMAIL` con asunto `[Arcade Vault] Mensaje de <nombre>`, el mensaje en el cuerpo y `reply-to` igual al correo del visitante.
+- [X] Tras un envío exitoso aparece la terminal "VAULT-OS // TERMINAL" con "MENSAJE RECIBIDO. TE RESPONDEREMOS PRONTO. GRACIAS, <NOMBRE EN MAYÚSCULAS>.".
+- [X] ENVIAR OTRO MENSAJE vuelve al formulario con los tres campos vacíos.
+- [X] Mientras la acción está en curso, el botón está deshabilitado y muestra "ENVIANDO…"; no se puede enviar dos veces.
+- [X] Con una `RESEND_API_KEY` inválida o ausente, el formulario muestra el aviso `[ERROR]`, conserva los datos escritos y **no** muestra la terminal de éxito.
+- [X] Llamar a la acción con un correo mal formado, un mensaje de más de 2000 caracteres o un campo vacío devuelve `{ ok: false, error: "invalid" }` y no llama a Resend.
+- [X] Con el campo honeypot `website` relleno no se envía ningún correo y la respuesta es `{ ok: true }`.
+- [X] `RESEND_API_KEY` no aparece en el HTML, en los bundles de cliente ni en la pestaña Network del navegador.
+- [X] `.env.example` está versionado y `.env.local` no aparece en `git status`.
+- [X] El Nav tiene los enlaces Inicio, Biblioteca, Salón de la Fama y Acerca de, en escritorio y en el panel móvil, y "Acerca de" se marca activo en `/about`.
+- [X] Las secciones con `.reveal` aparecen al hacer scroll en `/about`.
+- [X] En 390 px `/about` no tiene scroll horizontal y el formulario es usable.
+- [X] La consola del navegador no muestra errores ni warnings de hidratación en `/about`, `/` y `/juegos`.
 
 ## Decisiones
 
