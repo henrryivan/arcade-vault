@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sendContactMessage } from "@/app/about/actions";
+import { validateContact } from "@/lib/contact";
 
 type HighlightKind = "HEART" | "BROWSER" | "PLANT";
 
@@ -41,19 +43,35 @@ export function About() {
   const rootRef = useRef<HTMLDivElement>(null);
   useReveal(rootRef);
 
-  const [form, setForm] = useState({ name: "", email: "", msg: "" });
+  const [form, setForm] = useState({ name: "", email: "", msg: "", website: "" });
   const [sent, setSent] = useState<string | null>(null);
   const [shake, setShake] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
 
-  // Envío simulado: el paso 7 lo reemplaza por la Server Action.
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.email.trim() || !form.msg.trim()) {
+    if (sending) return;
+
+    const checked = validateContact({ name: form.name, email: form.email, message: form.msg });
+    if (!checked.ok) {
       setShake(true);
       setTimeout(() => setShake(false), 400);
       return;
     }
-    setSent(form.name.trim());
+
+    setSending(true);
+    setFailed(false);
+    try {
+      const res = await sendContactMessage({ ...checked.value, website: form.website });
+      if (res.ok) setSent(res.name);
+      else setFailed(true);
+    } catch {
+      // Fallo de red o de la propia acción: mismo aviso, sin perder lo escrito.
+      setFailed(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -138,8 +156,46 @@ export function About() {
                     placeholder="Cuéntanos qué tienes en mente…"
                   ></textarea>
                 </div>
-                <button className="btn xl press" type="submit" style={{ width: "100%" }}>
-                  ▶&nbsp; ENVIAR MENSAJE
+                {/* Honeypot: oculto para personas y lectores de pantalla; los bots lo rellenan. */}
+                <div
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}
+                >
+                  <label htmlFor="contact-website">WEBSITE</label>
+                  <input
+                    id="contact-website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={form.website}
+                    onChange={(e) => setForm({ ...form, website: e.target.value })}
+                  />
+                </div>
+                {failed && (
+                  <div
+                    role="alert"
+                    style={{
+                      marginBottom: 14,
+                      padding: "10px 12px",
+                      background: "#000",
+                      border: "1px solid var(--magenta)",
+                      color: "var(--magenta)",
+                      fontFamily: "var(--mono)",
+                      fontSize: 13,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    [ERROR] No se pudo enviar el mensaje. Inténtalo de nuevo.
+                  </div>
+                )}
+                <button
+                  className="btn xl press"
+                  type="submit"
+                  disabled={sending}
+                  style={{ width: "100%" }}
+                >
+                  {sending ? "ENVIANDO…" : <>▶&nbsp; ENVIAR MENSAJE</>}
                 </button>
               </>
             ) : (
@@ -167,7 +223,8 @@ export function About() {
                       type="button"
                       onClick={() => {
                         setSent(null);
-                        setForm({ name: "", email: "", msg: "" });
+                        setFailed(false);
+                        setForm({ name: "", email: "", msg: "", website: "" });
                       }}
                     >
                       ENVIAR OTRO MENSAJE
