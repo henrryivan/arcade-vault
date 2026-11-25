@@ -1,6 +1,6 @@
 # SPEC 02 — Home (landing) en `/` y biblioteca movida a `/juegos`
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01
 > **Date:** 2026-11-24
 > **Objective:** Implementar la página Home de `references/templates/home-about` como portada en `/` y mover la biblioteca actual a `/juegos`, sin implementar la página About.
