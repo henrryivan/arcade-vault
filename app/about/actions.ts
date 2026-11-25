@@ -51,7 +51,7 @@ export async function sendContactMessage(input: ContactInput): Promise<ContactRe
       text: `Nombre: ${name}\nCorreo: ${email}\n\nMensaje:\n${message}`,
     });
     if (error) {
-      console.error("[contact] Resend rechazó el envío:", error);
+      console.error(`[contact] Resend rechazó el envío: ${error.name}: ${error.message}`);
       return { ok: false, error: "send_failed" };
     }
   } catch (err) {
