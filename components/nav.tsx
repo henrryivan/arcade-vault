@@ -10,7 +10,8 @@ export function Nav() {
   const { user, signOut } = useSession();
   const [open, setOpen] = useState(false);
 
-  const isLibrary = pathname === "/" || pathname.startsWith("/juegos");
+  const isHome = pathname === "/";
+  const isLibrary = pathname.startsWith("/juegos");
   const isSalon = pathname.startsWith("/salon");
   const isAuth = pathname.startsWith("/auth");
 
@@ -19,7 +20,7 @@ export function Nav() {
   return (
     <>
       <nav className="av-nav">
-        <Link href="/" className="logo" onClick={close} aria-label="Arcade Vault, ir a la biblioteca">
+        <Link href="/" className="logo" onClick={close} aria-label="Arcade Vault, ir al inicio">
           <div className="logo-mark"></div>
           <div className="logo-text neon-cyan">
             ARCADE <span className="neon-magenta">VAULT</span>
@@ -28,6 +29,13 @@ export function Nav() {
         <div className="links">
           <Link
             href="/"
+            className={isHome ? "active" : ""}
+            aria-current={isHome ? "page" : undefined}
+          >
+            Inicio
+          </Link>
+          <Link
+            href="/juegos"
             className={isLibrary ? "active" : ""}
             aria-current={isLibrary ? "page" : undefined}
           >
@@ -78,7 +86,10 @@ export function Nav() {
         <div className="pixel neon-cyan" style={{ fontSize: 11, marginBottom: 16 }}>
           MENÚ
         </div>
-        <Link href="/" className={isLibrary ? "active" : ""} onClick={close}>
+        <Link href="/" className={isHome ? "active" : ""} onClick={close}>
+          Inicio
+        </Link>
+        <Link href="/juegos" className={isLibrary ? "active" : ""} onClick={close}>
           Biblioteca
         </Link>
         <Link href="/salon" className={isSalon ? "active" : ""} onClick={close}>
