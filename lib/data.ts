@@ -111,6 +111,17 @@ export const GAMES: Game[] = [
     best: 24,
     plays: "4.2K",
   },
+  {
+    id: "asteroids",
+    title: "ASTEROIDES",
+    short: "Rota, dispara y sobrevive al campo de asteroides.",
+    long: "Pilota tu nave en el vacío, dispara a las rocas y míralas partirse en fragmentos cada vez más rápidos. Recoge el power-up 3x para disparar en abanico. Cada nivel trae más asteroides.",
+    cat: "SHOOTER",
+    cover: "cover-asteroides",
+    color: "cyan",
+    best: 0,
+    plays: "0",
+  },
 ];
 
 export const CATS: ("TODOS" | Category)[] = [
