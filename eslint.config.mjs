@@ -9,7 +9,7 @@ const eslintConfig = defineConfig([
     files: ["**/*.{ts,tsx,js,jsx,mjs,cjs}"],
     rules: {
       // Código compacto: sin líneas en blanco (autocorregible con --fix).
-      "no-multiple-empty-lines": ["error", { max: 0, maxBOF: 0, maxEOF: 0 }],
+      "no-multiple-empty-lines": ["error", { max: 1, maxBOF: 0, maxEOF: 0 }],
     },
   },
   // Override default ignores of eslint-config-next.
