@@ -1,6 +1,6 @@
 # SPEC 05 — Primer juego real: Asteroides
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01, SPEC 02
 > **Date:** 2026-11-27
 > **Objective:** Portar el juego de `references/started-games/02-asteroids` a un motor TypeScript con canvas y conectarlo a `GamePlayer` como un juego nuevo e independiente (`id: "asteroids"`, título "ASTEROIDES"), con su HUD de plataforma sincronizado por callbacks.
