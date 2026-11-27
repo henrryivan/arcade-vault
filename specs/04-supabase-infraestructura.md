@@ -1,6 +1,6 @@
 # SPEC 04 — Infraestructura de Supabase en Next.js
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 03
 > **Date:** 2026-11-27
 > **Objective:** Dejar Supabase conectado al proyecto Next.js (SDK, clientes de servidor y navegador, variables de entorno, proxy de refresco de sesión y carpeta `supabase/` para migraciones) sin tablas ni cambios visibles de UI.
