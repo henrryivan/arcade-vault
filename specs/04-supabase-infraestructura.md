@@ -61,7 +61,7 @@ lib/supabase/
   database.types.ts  # generado con la CLI o el MCP
 proxy.ts             # raíz: export async function proxy(request) + config.matcher
 supabase/
-  config.toml        # generado por supabase init
+  config.jsonc       # generado por supabase init (la CLI v3 ya no genera config.toml)
 ```
 
 Convenciones:
@@ -79,7 +79,7 @@ Antes de empezar, leer en `node_modules/next/dist/docs/01-app` las guías de `pr
 3. Generar `lib/supabase/database.types.ts` con `generate_typescript_types` del MCP (esquema `public` vacío). Verificar con `npx tsc --noEmit`.
 4. Crear `lib/supabase/client.ts` y `lib/supabase/server.ts` tipados con `Database`. Verificar con `npx tsc --noEmit`.
 5. Crear `lib/supabase/proxy.ts` (`updateSession`) y `proxy.ts` en la raíz con un `matcher` que excluya `_next/static`, `_next/image`, `favicon.ico` e imágenes. El proxy no redirige ni bloquea nada. Verificar que `/`, `/juegos`, `/salon`, `/auth` y `/about` siguen cargando y que `npm run build` termina sin errores.
-6. Ejecutar `npx supabase init` (genera `supabase/config.toml`) y `npx supabase link --project-ref lwalpcmwgkfrsrdavqix` usando `SUPABASE_DB_PASSWORD`. No crear migraciones. Revisar qué archivos de `supabase/` deben ir a `.gitignore` (p. ej. `supabase/.temp`).
+6. Ejecutar `npx supabase init` (genera `supabase/config.jsonc`) y `npx supabase link --project-ref lwalpcmwgkfrsrdavqix` usando `SUPABASE_DB_PASSWORD`. No crear migraciones. Revisar qué archivos de `supabase/` deben ir a `.gitignore` (p. ej. `supabase/.temp`).
 7. Verificar la conexión con un script temporal fuera de `app/` que use el cliente de servidor para una consulta trivial (p. ej. `auth.getSession()` o listar `public` con el cliente) y confirmar que responde sin error. Eliminar el script al terminar. Documentar en `README.md` las variables nuevas y los comandos `supabase link` / generación de tipos.
 
 ## Criterios de aceptación
@@ -91,7 +91,7 @@ Antes de empezar, leer en `node_modules/next/dist/docs/01-app` las guías de `pr
 - [ ] `.env.example` está versionado e incluye `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`; `.env.local` no aparece en `git status`.
 - [ ] `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` empieza por `sb_publishable_` y no existe ninguna clave `secret` ni `service_role` en el repositorio ni en `.env.example`.
 - [ ] Existen `lib/supabase/client.ts`, `lib/supabase/server.ts`, `lib/supabase/proxy.ts`, `lib/supabase/database.types.ts` y `proxy.ts` en la raíz.
-- [ ] `supabase/config.toml` existe y `npx supabase link` al proyecto `lwalpcmwgkfrsrdavqix` termina sin errores.
+- [ ] `supabase/config.jsonc` existe y `npx supabase link` al proyecto `lwalpcmwgkfrsrdavqix` termina sin errores.
 - [ ] La carpeta `supabase/` no contiene migraciones y `supabase/.temp` no aparece en `git status`.
 - [ ] La verificación con el cliente de servidor responde sin error contra el proyecto real, y el script temporal ya no existe.
 - [ ] Con las variables ausentes, crear un cliente lanza un error que nombra la variable faltante.
